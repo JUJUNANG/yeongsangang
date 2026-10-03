@@ -3,7 +3,7 @@ from nicegui import ui, app
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 import cv2, numpy as np, mediapipe as mp
-import base64, qrcode, socket, tempfile, shutil, time
+import base64, qrcode, socket, tempfile, shutil, time, asyncio
 
 B=Path(__file__).parent
 BG,OUT=B/'backgrounds',B/'output'
@@ -21,6 +21,11 @@ shutil.copyfile(MODEL,TMP)
 N=['황포돛배와 영산강 노을','느러지 한반도 물돌이','푸른 영산강 풍경','영산강 빛의 산책로',
    '영산강 코스모스 정원','황포돛배와 영산강','영산강 양귀비 꽃밭','2026 나주영산강축제']
 sel=1
+
+SEGMENTER = None
+
+def get_segmenter():
+    ...
 
 
 def read(p):
@@ -283,7 +288,7 @@ async def shoot(c):
         ),1
     )
 
-    r=cut(p,sel)
+    r = await asyncio.to_thread(cut, p, sel)
     n=f'photo_{int(time.time()*1000)}.jpg'
 
     cv2.imencode('.jpg',r)[1].tofile(str(OUT/n))
