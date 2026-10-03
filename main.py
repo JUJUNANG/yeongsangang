@@ -9,7 +9,7 @@ import base64, qrcode, socket, tempfile, shutil, time, asyncio
 B=Path(__file__).parent
 BG,OUT=B/'backgrounds',B/'output'
 FRAME=B/'frame/frame1.png'
-FONT=B/'font/font.ttf'
+FONT=B/'font/font.ttf'FONT=Path('/usr/share/fonts/truetype/nanum/NanumGothic.ttf')
 MODEL=B/'model/selfie_segmenter.tflite'
 OUT.mkdir(exist_ok=True)
 
