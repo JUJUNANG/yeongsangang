@@ -2,6 +2,7 @@ import os
 from nicegui import ui, app
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+import io
 import cv2, numpy as np, mediapipe as mp
 import base64, qrcode, socket, tempfile, shutil, time, asyncio
 
@@ -91,11 +92,13 @@ def frame(file,msg):
 
     size=int(W*.034)
 
-    while size>24:
-        font=ImageFont.truetype(str(FONT),size)
-        if all(d.textbbox((0,0),x,font=font)[2]<W*.8 for x in lines):
+    font_data = FONT.read_bytes()
+
+    while size > 24:
+        font = ImageFont.truetype(io.BytesIO(font_data), size)
+        if all(d.textbbox((0, 0), x, font=font)[2] < W * .8 for x in lines):
             break
-        size-=2
+        size -= 2
 
     for i,x in enumerate(lines):
         d.text(
