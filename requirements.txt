@@ -1,0 +1,6 @@
+nicegui
+opencv-python-headless
+pillow
+qrcode
+mediapipe
+numpy
