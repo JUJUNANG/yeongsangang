@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN fc-cache -f -v
+# 폰트 파일이 실제로 Docker 안에 들어왔는지 확인
+RUN test -f /app/font/font.ttf
 
 CMD ["python", "main.py"]
